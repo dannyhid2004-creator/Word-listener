@@ -18,7 +18,8 @@
 </audio>
 
 <script>
-const words = ["schedule","penalty","touchdown"];
+const words = ["schedule","penalty","touchdown","next gen stat","Wild","Fine","Fined","Fines","Saftey","Pro Bowl","Pro Bowler","SuperBowl","Record","Trade","Traded","Roughing the Passer","Late Hit","One Handed","Tush Push","What a Catch","No Good","Turf","Hunt","Hunting"];
+let detectedLog = []; // store detected words
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -41,12 +42,21 @@ recognition.onresult = (e) => {
 
   words.forEach(w => {
     if (text.includes(w)) {
+      // Play beep
       document.getElementById("beep").play();
+      
+      // Alert
       document.getElementById("alert").innerText =
         `🚨 WORD DETECTED: ${w}`;
+
+      // Save to log with timestamp
+      const time = new Date().toLocaleTimeString();
+      detectedLog.push({ word: w, time });
+      updateLog(); // function to show log
     }
   });
 };
+
 
 recognition.onend = () => recognition.start();
 </script>
